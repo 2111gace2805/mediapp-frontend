@@ -2,13 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Patient } from '../model/patient';
+import { Subject} from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class PatientService {
+  //Variable publica
+   patientChange = new Subject<Patient[]>;  //en [] porque obtiene una lista de patients
 
-  private url: string = `${environment.HOST}/patients`;  
+  private url: string = `${environment.HOST}/patients`;
 
   constructor(private http: HttpClient) { }
 
@@ -19,4 +23,20 @@ export class PatientService {
   findById(idPatient: number){
     return this.http.get<Patient>(`${this.url}/${idPatient}`)
   }
+
+  //Registrar
+  //Recibe un paciente y vamos a retornar una peticion de tipo post y le passamoe el patiente involucdrao
+  save(patient: Patient){
+    //return this.http.post<Patient>(this.url, patient); cuando quieres retornar
+    return this.http.post(this.url, patient);
+  }
+
+  update(patient: Patient){
+    return this.http.put(this.url, patient);
+  }
+
+  delete( idPatient: number){
+    return this.http.delete(`${this.url}/${idPatient}`);
+  }
+
 }

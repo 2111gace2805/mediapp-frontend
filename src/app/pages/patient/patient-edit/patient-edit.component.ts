@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { Patient } from 'src/app/model/patient';
 import { PatientService } from 'src/app/service/patient.service';
 
 @Component({
@@ -16,6 +18,8 @@ export class PatientEditComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute, //Recuperando la informacion de la URL  ACTIVA EN ESE MOMENTOS
+    //navegar entre componenteestes
+    private router: Router,
     private patientService: PatientService
   ) { }
 
@@ -63,5 +67,37 @@ export class PatientEditComponent implements OnInit {
 
   operate(){
 
+  //generamos una instancia y decimos este paciente tiene un id patient que lo vamos a recupar del formulario
+    let patient = new Patient();
+    patient.idPatient = this.form.value['idPatient']; //este idPatient viene del html
+    patient.firstName = this.form.value['firstName'];
+    patient.lastName = this.form.value['lastName'];
+    patient.dni = this.form.value['dni'];
+    patient.address = this.form.value['address'];
+    patient.phone = this.form.value['phone'];
+    patient.email = this.form.value['email'];
+
+
+    //form es el nombre del formulario en el html
+    if(this.form.invalid){return;}
+
+    if(this.isEdit){
+      //UPDATE
+      //Practica comun  despues de actualizar djar el parentsis en blanco y luego una acccion hacer y al subscribimer obtienes una nueva data y
+      //utilizamos la variable reactiva .. y ofrece un metodo next que espera un valor
+      // ANTERIOR -->   this.patientService.update(patient).subscribe(); //le ponemos subscribe para enterarnos del resultado
+      this.patientService.update(patient).subscribe(() => {
+        this.patientService.findAll().subscribe(data => {
+          this.patientService.patientChange.next(data);
+        });
+      });
+
+    }else{
+      //INSERT
+      this.patientService.save(patient).subscribe();
+
+    }
+//despues de insertar o actualizar yo puedo navegar hacia el padre
+    this.router.navigate(['pages/patient'])
   }
 }
