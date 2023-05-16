@@ -6,8 +6,8 @@ import { PatientComponent } from './pages/patient/patient.component';
 
 const routes: Routes = [
   { path: 'pages/patient', component: PatientComponent, children: [
-    { path: 'new', component: PatientEditComponent },
-    { path: 'edit/:id', component: PatientEditComponent }
+    { path: 'new', component: PatientEditComponent }, //hijo para un nuevo
+    { path: 'edit/:id', component: PatientEditComponent } //hijo
   ] },
   { path: 'pages/medic', component: MedicComponent }
 ];

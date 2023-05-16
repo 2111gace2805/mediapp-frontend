@@ -1,4 +1,6 @@
 
+  <!-- para mostrar a sus hijos-->
+  <router-outlet></router-outlet>
 
 <mat-form-field appearance="standard">
     <mat-label>Filter</mat-label>
@@ -36,6 +38,8 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let row">
+          <!-- como hay parte dinamica cambia [routerLink="/pages/patient/edit/row.idPatient"] -->
+          <!--primera parte a navegar solo edit porque se entiente que esta en el padre y luego el parametro-->
             <button mat-button color="primary" [routerLink]="['edit', row.idPatient]">
                 <mat-icon>ballot</mat-icon>
             </button>
@@ -56,9 +60,9 @@
 
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
 
+    <!--Boton circular accent es ROJO-->
     <button mat-fab color="accent" style="float: right" routerLink="/pages/patient/new" >
         <mat-icon>add</mat-icon>
     </button>
   </div>
   <br>
-  <router-outlet></router-outlet>

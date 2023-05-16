@@ -15,13 +15,14 @@ export class PatientEditComponent implements OnInit {
   form: FormGroup;
 
   constructor(
-    private route: ActivatedRoute,
+    private route: ActivatedRoute, //Recuperando la informacion de la URL  ACTIVA EN ESE MOMENTOS
     private patientService: PatientService
   ) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      'idPatient' : new FormControl(0),
+      //aqui va el nombre que le asiga en el html por ejemplo formControlName="idPatient"
+      'idPatient' : new FormControl(0), //lo inicializamos con un valor 0
       'firstName' : new FormControl('', [Validators.required, Validators.minLength(3)]),
       'lastName' : new FormControl('', [Validators.required, Validators.minLength(3)]),
       'dni' : new FormControl('', [Validators.required, Validators.maxLength(8)]),
@@ -31,17 +32,18 @@ export class PatientEditComponent implements OnInit {
     });
 
     this.route.params.subscribe(data => {
-      this.id = data['id'];
-      this.isEdit = data['id'] != null;
+      this.id = data['id'];  //data que has recouperado y el parametro id si le ponemos :id ese si le ponemos :x aqui seria x
+      this.isEdit = data['id'] != null; //si viene es una edicion si no es nuevo
       this.initForm();
     })
 
   }
 
+  //inicializamos el formulario ese nombre uno lo eligen
   initForm(){
     if(this.isEdit){
 
-      this.patientService.findById(this.id).subscribe(data => {
+      this.patientService.findById(this.id).subscribe(data => { //le paso el id y me subscribo con la data
         this.form = new FormGroup({
           'idPatient' : new FormControl(data.idPatient),
           'firstName' : new FormControl(data.firstName, [Validators.required, Validators.minLength(3)]),
@@ -51,12 +53,12 @@ export class PatientEditComponent implements OnInit {
           'phone' : new FormControl(data.phone, [Validators.required, Validators.minLength(9)]),
           'email' : new FormControl(data.email, [Validators.required, Validators.email])
         });
-      });      
+      });
     }
   }
 
   get f() {
-    return this.form.controls;
+    return this.form.controls;  // para obtener los nombres de mis formularios
   }
 
   operate(){
