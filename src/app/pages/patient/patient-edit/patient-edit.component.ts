@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs';
 import { Patient } from 'src/app/model/patient';
 import { PatientService } from 'src/app/service/patient.service';
 
@@ -83,18 +84,29 @@ export class PatientEditComponent implements OnInit {
 
     if(this.isEdit){
       //UPDATE
-      //Practica comun  despues de actualizar djar el parentsis en blanco y luego una acccion hacer y al subscribimer obtienes una nueva data y
+      //PRACTICA COMUN  despues de actualizar djar el parentsis en blanco y luego una acccion hacer y al subscribimer obtienes una nueva data y
       //utilizamos la variable reactiva .. y ofrece un metodo next que espera un valor
       // ANTERIOR -->   this.patientService.update(patient).subscribe(); //le ponemos subscribe para enterarnos del resultado
       this.patientService.update(patient).subscribe(() => {
         this.patientService.findAll().subscribe(data => {
           this.patientService.patientChange.next(data);
+          this.patientService.setMessageChange('UPDATED!');
         });
       });
 
     }else{
       //INSERT
-      this.patientService.save(patient).subscribe();
+      //this.patientService.save(patient).subscribe();
+      //Practica ideal utilizamos un pipe cuandome devuelve obsarbale y este permite
+      //operar con operadores reactivos antes de la subscripcion
+      //Switchmap recibe la data anterior, primero guardamos y luego mostramos cuando estamos
+      //seguros aplico la subscripcion
+      this.patientService.save(patient).pipe(switchMap( ()=>{
+        return this.patientService.findAll();
+      })).subscribe(data => {
+        this.patientService.patientChange.next(data)
+        this.patientService.setMessageChange('CREATED!');
+      });
 
     }
 //despues de insertar o actualizar yo puedo navegar hacia el padre
