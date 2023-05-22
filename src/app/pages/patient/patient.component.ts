@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { switchMap } from 'rxjs';
@@ -14,6 +15,8 @@ export class PatientComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'dni', 'actions'];
   dataSource: MatTableDataSource<Patient>;
+  //Paginador
+  @ViewChild(MatPaginator) paginador: MatPaginator;
 
   constructor(
     private snackBar: MatSnackBar,
@@ -56,5 +59,7 @@ export class PatientComponent implements OnInit {
       this.patientService.setMessageChange('DELETED!');
     });
   }
+
+//Metodo del paginador
 
 }
