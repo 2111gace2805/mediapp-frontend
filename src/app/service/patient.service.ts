@@ -3,18 +3,28 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Patient } from '../model/patient';
 import { Subject} from 'rxjs';
+import { GenericService } from './generic.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class PatientService {
+export class PatientService extends GenericService<Patient> {
   //Variable publica
    patientChange = new Subject<Patient[]>;  //en [] porque obtiene una lista de patients
 
   //Variable privada para notificar
   private messageChange = new Subject<string>;
 
+  constructor(protected override http: HttpClient) {
+    super(
+      http,
+      `${environment.HOST}/patients`
+      );
+
+   }
+
+/*
   private url: string = `${environment.HOST}/patients`;
 
   constructor(private http: HttpClient) { }
@@ -41,6 +51,8 @@ export class PatientService {
   delete( idPatient: number){
     return this.http.delete(`${this.url}/${idPatient}`);
   }
+
+  */
  ///Getter y setter para el message
  setMessageChange(message: string){
   this.messageChange.next(message);

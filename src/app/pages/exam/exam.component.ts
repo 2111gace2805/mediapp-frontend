@@ -4,18 +4,18 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { switchMap } from 'rxjs';
-import { Patient } from 'src/app/model/patient';
-import { PatientService } from 'src/app/service/patient.service';
+import { Exam } from 'src/app/model/exam';
+import { ExamService } from 'src/app/service/exam.service';
 
 @Component({
-  selector: 'app-patient',
-  templateUrl: './patient.component.html',
-  styleUrls: ['./patient.component.css']
+  selector: 'app-exam',
+  templateUrl: './exam.component.html',
+  styleUrls: ['./exam.component.css']
 })
-export class PatientComponent implements OnInit {
+export class ExamComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'dni', 'actions'];
-  dataSource: MatTableDataSource<Patient>;
+  displayedColumns: string[] = ['id', 'name', 'description',  'actions'];
+  dataSource: MatTableDataSource<Exam>;
 
   //Paginador
   @ViewChild(MatPaginator) paginador: MatPaginator;
@@ -25,29 +25,21 @@ export class PatientComponent implements OnInit {
 
   constructor(
     private snackBar: MatSnackBar,
-    private patientService: PatientService) { }
+    private examService: ExamService) { }
 
   ngOnInit(): void {
 
-    this.patientService.patientChange.subscribe( data => {    //Quiero entenerrm del contenido
+    this.examService.getExamChange().subscribe( data => {    //Quiero entenerrm del contenido
       //this.dataSource = new MatTableDataSource(data);  //repoblamos con los datos de la variable anterior
       this.createTable(data);
     });
 
-    this.patientService.patientChange.subscribe( data => {    //Quiero entenerrm del contenido
-      console.log(data);
-    });
-
-    this.patientService.patientChange.subscribe( data => {    //Quiero entenerrm del contenido
-      console.log("hola");
-    });
-
     //PARA DARME CUENTA desde el padre abrir el mensaje del hijo
-    this.patientService.getMessageChange().subscribe(data => {
+    this.examService.getMessageChange().subscribe(data => {
       this.snackBar.open(data, 'INFO', {duration: 2000,  verticalPosition:'top', horizontalPosition:'right'});
     });
 
-    this.patientService.findAll().subscribe(data => {
+    this.examService.findAll().subscribe(data => {
       //this.dataSource = new MatTableDataSource(data); lo quietamos porque lo vamos a usar en createTable
       this.createTable(data);
     });
@@ -58,22 +50,23 @@ export class PatientComponent implements OnInit {
 
   }
 
-  delete(idPatient: number){
-    this.patientService.delete(idPatient).pipe(switchMap(()=>{
-     return this.patientService.findAll();
+  delete(idExam: number){
+    this.examService.delete(idExam).pipe(switchMap(()=>{
+     return this.examService.findAll();
     }))
     .subscribe(data => {
-      this.patientService.patientChange.next(data);
-      this.patientService.setMessageChange('DELETED!');
+      this.examService.setExamChange(data);
+      this.examService.setMessageChange('DELETED!');
     });
   }
 
 //Metodo del paginador
-//Recibe un arreglo tipo patient
-createTable(patients: Patient[]){
-  this.dataSource = new MatTableDataSource(patients);
+//Recibe un arreglo tipo exam
+createTable(exams: Exam[]){
+  this.dataSource = new MatTableDataSource(exams);
   this.dataSource.paginator = this.paginador;  //este  this.paginador capturar a taves del paginador viewchild
   this.dataSource.sort = this.sort;
 }
+
 
 }

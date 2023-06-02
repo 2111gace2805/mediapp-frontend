@@ -9,22 +9,35 @@ import { MedicComponent } from './pages/medic/medic.component';
 import { MaterialModule } from './material/material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { PatientEditComponent } from './pages/patient/patient-edit/patient-edit.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MedicDialogComponent } from './pages/medic/medic-dialog/medic-dialog.component';
+import { ExamComponent } from './pages/exam/exam.component';
+import { ExamEditComponent } from './pages/exam/exam-edit/exam-edit.component';
+import { SpecialtyComponent } from './pages/specialty/specialty.component';
+import { SpecialtyEditComponent } from './pages/specialty/specialty-edit/specialty-edit.component';
+import { ConsultComponent } from './pages/consult/consult.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PatientComponent,
     MedicComponent,
-    PatientEditComponent
+    PatientEditComponent,
+    MedicDialogComponent,
+    ExamComponent,
+    ExamEditComponent,
+    SpecialtyComponent,
+    SpecialtyEditComponent,
+    ConsultComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,    
+    BrowserAnimationsModule,
     HttpClientModule,
     MaterialModule,
-    ReactiveFormsModule //para uso de forms
+    ReactiveFormsModule, //para uso de forms
+    FormsModule //para el two way binding
   ],
   providers: [],
   bootstrap: [AppComponent]
