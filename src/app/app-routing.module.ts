@@ -8,6 +8,7 @@ import { ExamComponent } from './pages/exam/exam.component';
 import { SpecialtyEditComponent } from './pages/specialty/specialty-edit/specialty-edit.component';
 import { SpecialtyComponent } from './pages/specialty/specialty.component';
 import { ConsultComponent } from './pages/consult/consult.component';
+import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
   { path: 'pages/patient', component: PatientComponent, children: [
@@ -24,7 +25,9 @@ const routes: Routes = [
   ] },
   { path: 'pages/medic', component: MedicComponent }
   ,
-  { path: 'pages/consult', component: ConsultComponent }
+  { path: 'pages/consult', component: ConsultComponent },
+  {path: 'login', component: LoginComponent},
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
 ];
 
 @NgModule({

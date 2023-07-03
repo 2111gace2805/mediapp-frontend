@@ -17,6 +17,9 @@ import { MatSelectModule } from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {DateAdapter, MatNativeDateModule, MAT_DATE_LOCALE} from '@angular/material/core';
 import { CustomDateAdapter } from './custom-adapter';
+import {MatCardModule} from '@angular/material/card';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [],
@@ -39,7 +42,10 @@ import { CustomDateAdapter } from './custom-adapter';
     MatDialogModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule //tiene que ir de la mano con el datepicker
+    MatNativeDateModule, //tiene que ir de la mano con el datepicker
+    MatCardModule,
+    MatExpansionModule, //para ver al dar clic en diagnostico podemos ver el tratamiento
+    MatListModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
