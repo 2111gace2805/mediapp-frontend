@@ -17,6 +17,7 @@ import { SpecialtyComponent } from './pages/specialty/specialty.component';
 import { SpecialtyEditComponent } from './pages/specialty/specialty-edit/specialty-edit.component';
 import { ConsultComponent } from './pages/consult/consult.component';
 import { LoginComponent } from './pages/login/login.component';
+import { ConsultAutocompleteComponent } from './pages/consult-autocomplete/consult-autocomplete.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { LoginComponent } from './pages/login/login.component';
     SpecialtyComponent,
     SpecialtyEditComponent,
     ConsultComponent,
-    LoginComponent
+    LoginComponent,
+    ConsultAutocompleteComponent
   ],
   imports: [
     BrowserModule,

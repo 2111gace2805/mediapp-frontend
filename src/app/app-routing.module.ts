@@ -9,6 +9,7 @@ import { SpecialtyEditComponent } from './pages/specialty/specialty-edit/special
 import { SpecialtyComponent } from './pages/specialty/specialty.component';
 import { ConsultComponent } from './pages/consult/consult.component';
 import { LoginComponent } from './pages/login/login.component';
+import { ConsultAutocompleteComponent } from './pages/consult-autocomplete/consult-autocomplete.component';
 
 const routes: Routes = [
   { path: 'pages/patient', component: PatientComponent, children: [
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'pages/medic', component: MedicComponent }
   ,
   { path: 'pages/consult', component: ConsultComponent },
+  { path: 'pages/consult-autocomplete', component: ConsultAutocompleteComponent },
   {path: 'login', component: LoginComponent},
   {path: '', redirectTo: 'login', pathMatch: 'full'},
 ];
